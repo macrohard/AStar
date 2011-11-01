@@ -1,0 +1,36 @@
+<languageVersion : 1.0;>
+
+kernel AlphaFilter
+<   namespace : "com.sothink.heroonline";
+    vendor : "Sothink Soft";
+    version : 1;
+    description : "Generate Diagonal";
+>
+{
+    output pixel3 dst;
+    parameter float2 endNode;
+    
+    void evaluatePixel(){
+        float2 coord = outCoord();
+       
+        float dx = floor(coord.x) - endNode.x;
+        float dy = floor(coord.y) - endNode.y;
+        
+        if (dx < 0.0)
+            dx = -dx;
+        if (dy < 0.0)
+            dy = -dy;
+            
+        float diag;
+        if (dx > dy)
+            diag = dy;
+        else
+            diag = dx;
+            
+        float straight = dx + dy;
+        
+        dst.x = 1414.0 * diag + 1000.0 * (straight - 2.0 * diag);
+        dst.y = 0.0;
+        dst.z = 0.0;
+    }
+}
